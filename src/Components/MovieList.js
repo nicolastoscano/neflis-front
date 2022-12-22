@@ -19,8 +19,6 @@ const MovieList = ({ movies, toggleFavourites, favouritesMovies }) => {
         settings: {
           slidesToShow: 3,
           slidesToScroll: 3,
-          infinite: true,
-          dots: true
         }
       },
       {
@@ -28,7 +26,6 @@ const MovieList = ({ movies, toggleFavourites, favouritesMovies }) => {
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
-          initialSlide: 2
         }
       },
       {
