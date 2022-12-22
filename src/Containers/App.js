@@ -41,6 +41,7 @@ function App() {
           </Link>
           {authModal !== false && (
             <AuthForm
+              authModal={authModal}
               onClose={() => setAuthModal(false)}
               onSubmit={actions.onAuthSubmit}
             />

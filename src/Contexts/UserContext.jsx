@@ -4,7 +4,6 @@ export const UserContext = React.createContext();
 
 export function UserProvider(props) {
   const [user, setUser] = useState(undefined);
-  const [authModal] = useState(false);
   const token = localStorage.getItem('token');
 
   useEffect(() => {
@@ -30,7 +29,7 @@ export function UserProvider(props) {
     }
   }, []);
 
-  const onAuthSubmit = (email, password) => {
+  const onAuthSubmit = (authModal, email, password) => {
 
     const userData = JSON.stringify({email, password, password_confirmation: password});
 
