@@ -6,14 +6,8 @@ import Movie from "../Components/Movie";
 import AuthForm from "../Components/AuthForm";
 import {FavouritesMoviesContext, FavouritesMoviesProvider} from "../Contexts/FavouritesMoviesContext";
 import {UserContext, UserProvider} from "../Contexts/UserContext";
-
-export default () => (
-  <UserProvider>
-    <FavouritesMoviesProvider>
-      <App/>
-    </FavouritesMoviesProvider>
-  </UserProvider>
-)
+import SearchTitle from "../Components/SearchTitle";
+import {data} from "autoprefixer";
 
 function App() {
   const [onTheatresMovies, setOnTheatresMovies] = useState([]);
@@ -22,23 +16,46 @@ function App() {
   const [authModal, setAuthModal] = useState(false);
   const [user, actions] = useContext(UserContext);
 
+  const [searchTitle, setSearchTitle] = useState('');
+  const [searchedMovies, setSearchedMovies] = useState('');
+
+  const searchMovie = async () => {
+    try {
+      const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=eabb83258512d6378ba85bb338210a45&query=${searchTitle}`)
+      const data = await response.json();
+      setSearchedMovies(data.results);
+    } catch (e) {
+      console.error(e.message);
+    }
+  }
+
   useEffect(() => {
     fetch('https://api.themoviedb.org/3/discover/movie?primary_release_date.gte=2021-08-01&primary_release_date.lte=2021-08-06&api_key=eabb83258512d6378ba85bb338210a45')
       .then(response => response.json())
-      .then(response => setOnTheatresMovies(response.results));
+      .then(response => setOnTheatresMovies(response.results))
+      .catch((error) => console.error(error.message));
+
     fetch('https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=eabb83258512d6378ba85bb338210a45')
       .then(response => response.json())
-      .then(response => setPopularMovies(response.results));
+      .then(response => setPopularMovies(response.results))
+      .catch((error) => console.error(error.message));
   }, []);
 
   return (
     <Router>
       <div className=" bg-cover bg-gray-900 overflow-hidden ">
         <nav className=" bg-gradient-to-b from-gray-700 flex shadow-lg justify-between align-bottom pl-8 pr-8 ">
-
           <Link to={'/'}>
             <h1 className=" text-red-600 text-7xl mt-3 ">NEFLIS</h1>
           </Link>
+
+
+          <SearchTitle
+            searchTitle={searchTitle}
+            setSearchTitle={setSearchTitle}
+            onSubmit={searchMovie}
+          />
+
           {authModal !== false && (
             <AuthForm
               authModal={authModal}
@@ -46,6 +63,7 @@ function App() {
               onSubmit={actions.onAuthSubmit}
             />
           )}
+
           {user !== undefined ? (
             <div className=" flex py-5 " >
               <Link to={'/movies'}>
@@ -77,23 +95,31 @@ function App() {
 
 
         </nav>
-
         <div className=" p-4 ">
           <Route path='/' exact={true}>
-            <p className=" text-3xl tracking-wide pt-6 m-1 text-gray-200 ">On theatres</p>
-            <div className=" ml-2 ">
-              <MovieList movies={onTheatresMovies}/>
-            </div>
-            <p className=" text-3xl tracking-wide pt-6 m-1 text-gray-200 ">Popular Movies</p>
-            <div className=" m-2 ">
-              <MovieList movies={popularMovies}/>
-            </div>
+            {searchedMovies.length > 0 ? (
+              <>
+                <p className=" text-3xl tracking-wide pt-6 m-1 text-gray-200 ">Search</p>
+                <div className=" ml-2 ">
+                  <MovieList movies={searchedMovies}/>
+                </div>
+              </>
+            ) : (
+              <>
+                <p className=" text-3xl tracking-wide pt-6 m-1 text-gray-200 ">On theatres</p>
+                <div className=" ml-2 ">
+                  <MovieList movies={onTheatresMovies}/>
+                </div>
+                <p className=" text-3xl tracking-wide pt-6 m-1 text-gray-200 ">Popular Movies</p>
+                <div className=" m-2 ">
+                  <MovieList movies={popularMovies}/>
+                </div>
+              </>
+            )}
           </Route>
-
           <Route path={'/movies'}>
             <MovieList movies={favouritesMovies}/>
           </Route>
-
           <Route path='/movie/:id' exact={true}>
             <Movie/>
           </Route>
@@ -103,3 +129,10 @@ function App() {
   );
 }
 
+export default () => (
+  <UserProvider>
+    <FavouritesMoviesProvider>
+      <App/>
+    </FavouritesMoviesProvider>
+  </UserProvider>
+)

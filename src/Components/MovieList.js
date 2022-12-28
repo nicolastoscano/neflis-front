@@ -4,7 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 
-const MovieList = ({ movies, toggleFavourites, favouritesMovies }) => {
+const MovieList = ({ movies }) => {
 
   let settings = {
     dots: true,
@@ -41,7 +41,7 @@ const MovieList = ({ movies, toggleFavourites, favouritesMovies }) => {
   return (
     <div>
       <Slider {...settings} >
-          {movies.map(movie => <MovieCard movie={movie} toggleFavourites={toggleFavourites} favouritesMovies={favouritesMovies}/>)}
+          {movies.map(movie => <MovieCard movie={movie} />)}
       </Slider>
     </div>
   )
