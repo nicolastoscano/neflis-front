@@ -7,19 +7,22 @@ import AuthForm from "../Components/AuthForm";
 import {FavouritesMoviesContext, FavouritesMoviesProvider} from "../Contexts/FavouritesMoviesContext";
 import {UserContext, UserProvider} from "../Contexts/UserContext";
 import SearchTitle from "../Components/SearchTitle";
-import {data} from "autoprefixer";
+// import {data} from "autoprefixer";
 
 function App() {
   const [onTheatresMovies, setOnTheatresMovies] = useState([]);
   const [popularMovies, setPopularMovies] = useState([]);
   const [favouritesMovies] = useContext(FavouritesMoviesContext);
   const [authModal, setAuthModal] = useState(false);
-  const [user, actions] = useContext(UserContext);
-
+  const {user, logoutSubmit, onAuthSubmit} = useContext(UserContext);
   const [searchTitle, setSearchTitle] = useState('');
   const [searchedMovies, setSearchedMovies] = useState('');
 
   const searchMovie = async () => {
+    if (!searchTitle) {
+      setSearchedMovies([]);
+      return;
+    }
     try {
       const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=eabb83258512d6378ba85bb338210a45&query=${searchTitle}`)
       const data = await response.json();
@@ -48,22 +51,18 @@ function App() {
           <Link to={'/'}>
             <h1 className=" text-red-600 text-7xl mt-3 ">NEFLIS</h1>
           </Link>
-
-
           <SearchTitle
             searchTitle={searchTitle}
             setSearchTitle={setSearchTitle}
             onSubmit={searchMovie}
           />
-
           {authModal !== false && (
             <AuthForm
               authModal={authModal}
               onClose={() => setAuthModal(false)}
-              onSubmit={actions.onAuthSubmit}
+              onSubmit={onAuthSubmit}
             />
           )}
-
           {user !== undefined ? (
             <div className=" flex py-5 " >
               <Link to={'/movies'}>
@@ -71,7 +70,7 @@ function App() {
               </Link>
               <button
                 className=" text-gray-200 border-solid border-2 rounded px-5 py-2.5 hover:bg-red-500 "
-                onClick={actions.logoutSubmit}
+                onClick={logoutSubmit}
               >
                 LOG OUT
               </button>
@@ -92,8 +91,6 @@ function App() {
               </button>
             </div>
           )}
-
-
         </nav>
         <div className=" p-4 ">
           <Route path='/' exact={true}>

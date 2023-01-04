@@ -8,7 +8,7 @@ const SearchTitle = ({searchTitle, setSearchTitle, onSubmit}) => {
         value={searchTitle}
         onChange={e => setSearchTitle(e.target.value)}
         onKeyDown={e => {
-          if (!!searchTitle && e.keyCode === 13) {
+          if (e.keyCode === 13) {
             onSubmit()
           }
         }}

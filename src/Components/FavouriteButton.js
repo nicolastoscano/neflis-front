@@ -3,7 +3,7 @@ import {FavouritesMoviesContext} from "../Contexts/FavouritesMoviesContext";
 
 const FavouriteButton =({movie}) => {
   const [favouritesMovies, toggleFavourites] = useContext(FavouritesMoviesContext);
-  const isFavourite = favouritesMovies.find(fm => movie.id == fm.id);
+  const isFavourite = favouritesMovies.find(fm => movie.id === fm.id);
 
   return (
     <button

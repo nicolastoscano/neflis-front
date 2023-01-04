@@ -22,8 +22,8 @@ export function FavouritesMoviesProvider (props) {
   }, []);
 
   const toggleFavourites = (movie) => {
-    if (favouritesMovies.find(fm => movie.id == fm.id)) {
-      setFavouritesMovies(favouritesMovies.filter(fm => fm.id != movie.id))
+    if (favouritesMovies.find(fm => movie.id === fm.id)) {
+      setFavouritesMovies(favouritesMovies.filter(fm => fm.id !== movie.id))
       fetch(`http://localhost:8000/api/movies/${movie.id}`, {
         method: 'delete',
         body: JSON.stringify(movie),

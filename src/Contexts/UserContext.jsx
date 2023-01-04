@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useMemo} from "react";
 
 export const UserContext = React.createContext();
 
@@ -81,6 +81,14 @@ export function UserProvider(props) {
       })
   }
 
-  return <UserContext.Provider value={[user, {logoutSubmit, onAuthSubmit}]} {...props}/>
+  const value = useMemo(() => {
+    return ({
+      user,
+      logoutSubmit,
+      onAuthSubmit
+    })
+  }, [user])
+
+  return <UserContext.Provider value={value} {...props}/>
 
 };
