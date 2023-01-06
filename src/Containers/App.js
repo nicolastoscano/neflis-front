@@ -33,7 +33,7 @@ function App() {
 
   return (
     <Router>
-      <div className=" bg-cover bg-gray-900 overflow-hidden ">
+      <div className="min-h-screen bg-cover bg-gray-900 overflow-hidden ">
 
 
         <nav className=" bg-gradient-to-b from-gray-700 flex shadow-lg justify-between align-bottom pl-8 pr-8 ">

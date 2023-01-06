@@ -38,14 +38,13 @@ const Movie = () => {
       </div>
       <div className=" flex flex-col justify-between p-6 ">
         <h1 className=" text-4xl text-white ">{movie.title}</h1>
-        <h1 className="text-white" >{movie.overview}</h1>
+        <div className="flex flex-col " >
+          <h1 className="text-white" >{movie.genres.map(genre => genre.name).join(", ")}</h1>
+          <h1 className="text-white my-4" >{movie.runtime} minutes.</h1>
+          <h1 className="text-white" >{movie.overview}</h1>
+        </div>
       </div>
     </div>
   )
 }
 export default Movie;
-
-//   let movieVideo = await moviedb.movieVideos(id);
-//   movieVideo = movieVideo.results[0];
-//
-//   console.log(movieVideo)
