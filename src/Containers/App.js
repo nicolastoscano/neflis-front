@@ -34,15 +34,12 @@ function App() {
   return (
     <Router>
       <div className=" bg-cover bg-gray-900 overflow-hidden ">
+
+
         <nav className=" bg-gradient-to-b from-gray-700 flex shadow-lg justify-between align-bottom pl-8 pr-8 ">
           <Link to={'/'}>
             <h1 className=" text-red-600 text-7xl mt-3 ">NEFLIS</h1>
           </Link>
-          <SearchTitle
-            searchTitle={searchTitle}
-            setSearchTitle={setSearchTitle}
-            onSubmit={searchMovie}
-          />
           {authModal !== false && (
             <AuthForm
               authModal={authModal}
@@ -64,6 +61,13 @@ function App() {
             </div>
           ) : (
             <div className=" flex py-5 ">
+
+              <SearchTitle
+                searchTitle={searchTitle}
+                setSearchTitle={setSearchTitle}
+                onSubmit={searchMovie}
+              />
+
               <button
                 className=" text-gray-200 bg-gray-500 border-solid border-2 rounded border-transparent py-2.5 px-5 hover:bg-white hover:text-black mr-4 "
                 onClick={() => setAuthModal('signin')}
@@ -79,6 +83,8 @@ function App() {
             </div>
           )}
         </nav>
+
+
         <div className=" p-4 ">
           <Route path='/' exact={true}>
             {searchedMovies.length > 0 ? (
