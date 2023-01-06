@@ -1,17 +1,16 @@
 import {Route, BrowserRouter as Router, Link} from "react-router-dom";
 import '../App.css';
 import MovieList from "../Components/MovieList";
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useState} from "react";
 import Movie from "../Components/Movie";
 import AuthForm from "../Components/AuthForm";
 import {FavouritesMoviesContext, FavouritesMoviesProvider} from "../Contexts/FavouritesMoviesContext";
 import {UserContext, UserProvider} from "../Contexts/UserContext";
+import {MovieContext, MovieProvider} from "../Contexts/MovieContext";
 import SearchTitle from "../Components/SearchTitle";
-// import {data} from "autoprefixer";
 
 function App() {
-  const [onTheatresMovies, setOnTheatresMovies] = useState([]);
-  const [popularMovies, setPopularMovies] = useState([]);
+  const {onTheatresMovies, popularMovies} = useContext(MovieContext);
   const [favouritesMovies] = useContext(FavouritesMoviesContext);
   const [authModal, setAuthModal] = useState(false);
   const {user, logoutSubmit, onAuthSubmit} = useContext(UserContext);
@@ -31,18 +30,6 @@ function App() {
       console.error(e.message);
     }
   }
-
-  useEffect(() => {
-    fetch('https://api.themoviedb.org/3/discover/movie?primary_release_date.gte=2021-08-01&primary_release_date.lte=2021-08-06&api_key=eabb83258512d6378ba85bb338210a45')
-      .then(response => response.json())
-      .then(response => setOnTheatresMovies(response.results))
-      .catch((error) => console.error(error.message));
-
-    fetch('https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=eabb83258512d6378ba85bb338210a45')
-      .then(response => response.json())
-      .then(response => setPopularMovies(response.results))
-      .catch((error) => console.error(error.message));
-  }, []);
 
   return (
     <Router>
@@ -128,8 +115,10 @@ function App() {
 
 export default () => (
   <UserProvider>
-    <FavouritesMoviesProvider>
-      <App/>
-    </FavouritesMoviesProvider>
+    <MovieProvider>
+      <FavouritesMoviesProvider>
+        <App/>
+      </FavouritesMoviesProvider>
+    </MovieProvider>
   </UserProvider>
 )

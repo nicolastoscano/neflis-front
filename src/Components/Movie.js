@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Link, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import FavouriteButton from "./FavouriteButton";
 
 const { MovieDb } = require('moviedb-promise')
