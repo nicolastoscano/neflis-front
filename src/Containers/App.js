@@ -69,13 +69,13 @@ function App() {
               />
 
               <button
-                className=" text-gray-200 bg-gray-500 border-solid border-2 rounded border-transparent py-2.5 px-5 hover:bg-white hover:text-black mr-4 "
+                className=" text-gray-200 bg-gray-500 border-solid border-2 rounded border-transparent  px-5 hover:bg-white hover:text-black mr-4 "
                 onClick={() => setAuthModal('signin')}
               >
                 SIGN IN
               </button>
               <button
-                className=" text-gray-200 border-solid border-2 rounded border-transparent bg-blue-400 hover:bg-blue-700 py-2.5 px-5 "
+                className=" text-gray-200 border-solid border-2 rounded border-transparent bg-blue-400 hover:bg-blue-700  px-5 "
                 onClick={() => setAuthModal('register')}
               >
                 REGISTER
