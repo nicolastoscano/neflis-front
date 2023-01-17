@@ -34,12 +34,15 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen bg-cover bg-gray-900 overflow-hidden ">
-
-
         <nav className=" bg-gradient-to-b from-gray-700 flex shadow-lg justify-between align-bottom pl-8 pr-8 ">
           <Link to={'/'}>
             <h1 className=" text-red-600 text-7xl mt-3 ">NEFLIS</h1>
           </Link>
+          <SearchTitle
+            searchTitle={searchTitle}
+            setSearchTitle={setSearchTitle}
+            onSubmit={searchMovie}
+          />
           {authModal !== false && (
             <AuthForm
               authModal={authModal}
@@ -48,10 +51,13 @@ function App() {
             />
           )}
           {user !== undefined ? (
-            <div className=" flex py-5 " >
-              <Link to={'/movies'}>
-                <h1 className=" text-gray-200 mr-4 mt-5 hover:text-black  ">FAVOURITES MOVIES ♡</h1>
-              </Link>
+            <div className=" flex py-5	">
+              <div className=" text-gray-200 hover:text-white self-center mr-4">
+                <Link to={'/movies'}>
+                  <h1>FAVOURITES MOVIES ♡</h1>
+                </Link>
+              </div>
+
               <button
                 className=" text-gray-200 border-solid border-2 rounded px-5 py-2.5 hover:bg-red-500 "
                 onClick={logoutSubmit}
@@ -61,13 +67,6 @@ function App() {
             </div>
           ) : (
             <div className=" flex py-5 ">
-
-              <SearchTitle
-                searchTitle={searchTitle}
-                setSearchTitle={setSearchTitle}
-                onSubmit={searchMovie}
-              />
-
               <button
                 className=" text-gray-200 bg-gray-500 border-solid border-2 rounded border-transparent  px-5 hover:bg-white hover:text-black mr-4 "
                 onClick={() => setAuthModal('signin')}
@@ -83,13 +82,11 @@ function App() {
             </div>
           )}
         </nav>
-
-
         <div className=" p-4 ">
           <Route path='/' exact={true}>
             {searchedMovies.length > 0 ? (
               <>
-                <p className=" text-3xl tracking-wide pt-6 m-1 text-gray-200 ">Search</p>
+                <p className=" text-3xl tracking-wide pt-6 m-1 text-gray-200 ">Results</p>
                 <div className=" ml-2 ">
                   <MovieList movies={searchedMovies}/>
                 </div>

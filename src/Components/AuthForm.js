@@ -14,7 +14,7 @@ const AuthForm = ({
       <div className="absolute bg-black opacity-95 inset-0 z-0 flex items-center justify-center">
         <div className="w-full  max-w-lg p-5 relative mx-auto my-auto rounded-xl shadow-lg bg-gray-600">
           <div>
-            <img className="mx-auto h-12 w-auto" src="https://tiendasmq.com/wp-content/uploads/2020/07/870910.png" alt="Workflow"/>
+            <img className="mx-auto h-12 w-auto" src="https://www.pngmart.com/files/21/Netflix-N-Logo-PNG-Photos.png" alt="Workflow"/>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
               Sign in to your account
             </h2>
